@@ -9,7 +9,7 @@ namespace OnlineShop_MVVM_.ViewModels
     {
         private readonly ProductsM _productsM;
         //public IEnumerable<Product> ProductsDataList { get; set; }
-        public ObservableCollection<Product> ProductsDataList { get; set; }
+        public ObservableCollection<Product> ProductsDataList { get; set; } = new ObservableCollection<Product>();
 
         public ProductsVM()
         {
@@ -21,7 +21,6 @@ namespace OnlineShop_MVVM_.ViewModels
 
         private void prodList()
         {
-            ProductsDataList = [];
             var products = Product.GetProducts();
 
             foreach (var emp in products)
