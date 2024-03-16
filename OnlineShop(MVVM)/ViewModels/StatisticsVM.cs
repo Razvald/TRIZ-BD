@@ -16,9 +16,8 @@ namespace OnlineShop_MVVM_.ViewModels
         private StatisticM _statisticM;
         //public IEnumerable<Employee> EmployeesDataList { get; set; }
         //public IEnumerable<PickupPoint> PickupPointsDataList { get; set; }
-        public ObservableCollection<Employee> EmployeesDataList { get; set; }
-        public ObservableCollection<PickupPoint> PickupPointsDataList { get; set; }
-
+        public ObservableCollection<Employee> EmployeesDataList { get; set; } = new ObservableCollection<Employee>();
+        public ObservableCollection<PickupPoint> PickupPointsDataList { get; set; } = new ObservableCollection<PickupPoint>();
 
         public StatisticsVM()
         {
@@ -33,7 +32,6 @@ namespace OnlineShop_MVVM_.ViewModels
 
         private void empList()
         {
-            EmployeesDataList = [];
             var employees = Employee.GetEmployees();
 
             foreach (var emp in employees)
@@ -44,7 +42,6 @@ namespace OnlineShop_MVVM_.ViewModels
 
         private void pointList()
         {
-            PickupPointsDataList = [];
             var pickupPoints = PickupPoint.GetPickupPoints();
 
             foreach (var emp in pickupPoints)
