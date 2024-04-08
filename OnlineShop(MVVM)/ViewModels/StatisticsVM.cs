@@ -1,12 +1,6 @@
 ﻿using OnlineShop_MVVM_.Database.Entity;
 using OnlineShop_MVVM_.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace OnlineShop_MVVM_.ViewModels
@@ -14,17 +8,12 @@ namespace OnlineShop_MVVM_.ViewModels
     public class StatisticsVM : ViewModelBase
     {
         private StatisticM _statisticM;
-        //public IEnumerable<Employee> EmployeesDataList { get; set; }
-        //public IEnumerable<PickupPoint> PickupPointsDataList { get; set; }
         public ObservableCollection<Employee> EmployeesDataList { get; set; } = new ObservableCollection<Employee>();
         public ObservableCollection<PickupPoint> PickupPointsDataList { get; set; } = new ObservableCollection<PickupPoint>();
 
         public StatisticsVM()
         {
             _statisticM = new StatisticM();
-
-            //EmployeesDataList = Employee.GetEmployees();
-            //PickupPointsDataList = PickupPoint.GetPickupPoints();
 
             empList();
             pointList();

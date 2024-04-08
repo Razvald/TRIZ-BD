@@ -4,9 +4,6 @@ using System.Windows.Controls;
 
 namespace OnlineShop_MVVM_.UserControls
 {
-    /// <summary>
-    /// Логика взаимодействия для Header.xaml
-    /// </summary>
     public partial class Header : UserControl
     {
         public Header()
@@ -22,7 +19,7 @@ namespace OnlineShop_MVVM_.UserControls
 
         private void btnData_Click(object sender, RoutedEventArgs e)
         {
-            PickupEmployeeWind pickupEmployeeWind = new PickupEmployeeWind();
+            PickupEmployeeWind pickupEmployeeWind = new();
             pickupEmployeeWind.Show();
         }
 
@@ -34,7 +31,7 @@ namespace OnlineShop_MVVM_.UserControls
 
         private void btnStatistic_Click(object sender, RoutedEventArgs e)
         {
-            StatisticsWind statisticsWind = new StatisticsWind();
+            StatisticsWind statisticsWind = new();
             statisticsWind.Show();
         }
     }

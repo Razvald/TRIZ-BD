@@ -11,7 +11,7 @@ namespace OnlineShop_MVVM_.ViewModels
         public ObservableCollection<PickupEmployee> CombinedDataList { get; set; } = new ObservableCollection<PickupEmployee>();
 
         public PickupEmployeeVM()
-        { 
+        {
             _pickupEmployeeM = new PickupEmployeeM();
 
             var employees = Employee.GetEmployees();
