@@ -44,5 +44,6 @@ namespace OnlineShop_MVVM_.ViewModels
 
         public ICommand Filter { get; set; }
         public ICommand PropertyChanged { get; set; }
+        public ICommand Save { get; set; }
     }
 }
