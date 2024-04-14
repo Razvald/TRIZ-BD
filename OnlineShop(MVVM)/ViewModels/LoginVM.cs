@@ -6,7 +6,10 @@ namespace OnlineShop_MVVM_.ViewModels
     public class LoginVM : ViewModelBase
     {
         public LoginM _loginM;
-        public LoginVM() { _loginM = new LoginM(); }
+        public LoginVM()
+        { 
+            _loginM = new LoginM();
+        }
 
         public string Login
         {
