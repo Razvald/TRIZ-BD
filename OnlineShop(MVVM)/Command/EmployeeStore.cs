@@ -1,8 +1,8 @@
 ﻿using OnlineShop_MVVM_.Database.Entity;
 
-namespace OnlineShop_MVVM_.ViewModels
+namespace OnlineShop_MVVM_.Command
 {
-    class EmployeeStore
+    public class EmployeeStore
     {
         Employee _currentEmployee = new();
         public Employee CurrentEmployee

@@ -1,10 +1,10 @@
-﻿using System.Windows;
+﻿using System.Windows.Controls;
 
 namespace OnlineShop_MVVM_.Views
 {
-    public partial class MainWindow : Window
+    public partial class LoginV : UserControl
     {
-        public MainWindow()
+        public LoginV()
         {
             InitializeComponent();
         }

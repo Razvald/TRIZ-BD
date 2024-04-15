@@ -1,10 +1,10 @@
 ﻿namespace OnlineShop_MVVM_.ViewModels
 {
-    public class ViewModelStore
+    public class VMStore
     {
-        ViewModelBase _currentViewModel;
+        VMBase _currentViewModel;
 
-        public ViewModelBase CurrentViewModel
+        public VMBase CurrentViewModel
         {
             get
             {

@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace OnlineShop_MVVM_.ViewModels
 {
-    public class PickupEmployeeVM : ViewModelBase
+    public class PickupEmployeeVM : VMBase
     {
         private PickupEmployeeM _pickupEmployeeM;
         public ObservableCollection<PickupEmployee> CombinedDataList { get; set; } = new ObservableCollection<PickupEmployee>();

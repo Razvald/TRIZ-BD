@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace OnlineShop_MVVM_.ViewModels
+namespace OnlineShop_MVVM_.Command
 {
     public abstract class CommandBase : ICommand
     {

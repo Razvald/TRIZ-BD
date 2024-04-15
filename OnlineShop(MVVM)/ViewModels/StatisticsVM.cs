@@ -1,18 +1,23 @@
-﻿using OnlineShop_MVVM_.Database.Entity;
+﻿using OnlineShop_MVVM_.Command;
+using OnlineShop_MVVM_.Database.Entity;
 using OnlineShop_MVVM_.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace OnlineShop_MVVM_.ViewModels
 {
-    public class StatisticsVM : ViewModelBase
+    public class StatisticsVM : VMBase
     {
+        private readonly VMStore _vmStore;
+        private readonly EmployeeStore _epmStore;
         private StatisticM _statisticM;
         public ObservableCollection<Employee> EmployeesDataList { get; set; } = new ObservableCollection<Employee>();
         public ObservableCollection<PickupPoint> PickupPointsDataList { get; set; } = new ObservableCollection<PickupPoint>();
 
-        public StatisticsVM()
+        public StatisticsVM(VMStore vmStore, EmployeeStore empStore)
         {
+            _vmStore = vmStore;
+            _epmStore = empStore;
             _statisticM = new StatisticM();
 
             empList();
@@ -51,7 +56,7 @@ namespace OnlineShop_MVVM_.ViewModels
             set { _statisticM.SearchEmp = value; OnPropertyChanged(nameof(SearchEmp)); }
         }
 
-        public ICommand Filter { get; set; }
-        public ICommand PropertyChanged { get; set; }
+        //public ICommand Filter { get; set; }
+        //public ICommand PropertyChanged { get; set; }
     }
 }

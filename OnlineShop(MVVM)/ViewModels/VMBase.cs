@@ -2,7 +2,7 @@
 
 namespace OnlineShop_MVVM_.ViewModels
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public class VMBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)

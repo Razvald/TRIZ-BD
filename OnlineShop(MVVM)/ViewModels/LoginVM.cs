@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace OnlineShop_MVVM_.ViewModels
 {
-    public class LoginVM : ViewModelBase
+    public class LoginVM : VMBase
     {
         public LoginM _loginM;
         public LoginVM()

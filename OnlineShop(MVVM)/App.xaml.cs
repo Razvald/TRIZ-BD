@@ -1,4 +1,5 @@
-﻿using OnlineShop_MVVM_.ViewModels;
+﻿using OnlineShop_MVVM_.Command;
+using OnlineShop_MVVM_.ViewModels;
 using OnlineShop_MVVM_.Views;
 using System.Windows;
 
@@ -6,19 +7,21 @@ namespace OnlineShop_MVVM_
 {
     public partial class App : Application
     {
-        private readonly ViewModelStore _viewModelStore;
+        private readonly VMStore _viewModelStore;
+        private readonly EmployeeStore _employeeStore;
 
         public App()
         {
-            _viewModelStore = new ViewModelStore();
-            _viewModelStore.CurrentViewModel = new MainViewModel(_viewModelStore);
+            _viewModelStore = new VMStore();
+            _employeeStore = new EmployeeStore();
+            _viewModelStore.CurrentViewModel = new MainVM(_viewModelStore, _employeeStore);
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            MainWindow = new MainWindow()
+            MainWindow = new MainV()
             {
-                DataContext = new MainViewModel(_viewModelStore)
+                DataContext = new MainVM(_viewModelStore, _employeeStore)
             };
             MainWindow.Show();
 
