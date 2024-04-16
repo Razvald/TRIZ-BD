@@ -1,6 +1,8 @@
-﻿using OnlineShop_MVVM_.Database.Entity;
+﻿using OnlineShop_MVVM_.Command;
+using OnlineShop_MVVM_.Database.Entity;
 using OnlineShop_MVVM_.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace OnlineShop_MVVM_.ViewModels
@@ -14,6 +16,13 @@ namespace OnlineShop_MVVM_.ViewModels
         {
             _pickupEmployeeM = new PickupEmployeeM();
 
+            InitializeCombinedDataList();
+
+            SaveCommand = new SaveCommand();
+        }
+
+        private void InitializeCombinedDataList()
+        {
             var employees = Employee.GetEmployees();
             var pickupPoints = PickupPoint.GetPickupPoints();
             var orders = Order.GetOrders();
@@ -42,8 +51,6 @@ namespace OnlineShop_MVVM_.ViewModels
             set { _pickupEmployeeM.Search = value; OnPropertyChanged(nameof(Search)); }
         }
 
-        public ICommand Filter { get; set; }
-        public ICommand PropertyChanged { get; set; }
-        public ICommand Save { get; set; }
+        public ICommand SaveCommand { get; set; }
     }
 }

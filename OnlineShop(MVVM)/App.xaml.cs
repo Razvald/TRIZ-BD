@@ -14,6 +14,7 @@ namespace OnlineShop_MVVM_
         {
             _viewModelStore = new VMStore();
             _employeeStore = new EmployeeStore();
+
             _viewModelStore.CurrentViewModel = new MainVM(_viewModelStore, _employeeStore);
         }
 

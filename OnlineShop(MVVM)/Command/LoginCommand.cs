@@ -6,9 +6,9 @@ namespace OnlineShop_MVVM_.Command
 {
     class LoginCommand : CommandBase
     {
-        private VMStore _viewModelStore;
+        private readonly VMStore _viewModelStore;
         private readonly EmployeeStore _employeeStore;
-        private LoginVM _loginViewModel;
+        private readonly LoginVM _loginViewModel;
 
         public LoginCommand(VMStore viewModelStore, EmployeeStore employeeStore, LoginVM loginViewModel)
         {
@@ -28,9 +28,9 @@ namespace OnlineShop_MVVM_.Command
                 {
                     _employeeStore.CurrentEmployee = user;
                     if (_employeeStore.CurrentEmployee.Role == Role.Administrator)
-                        _viewModelStore.CurrentViewModel = new StatisticsVM(_viewModelStore, _employeeStore);
+                        _viewModelStore.CurrentViewModel = new StatisticsVM();
                     else
-                        _viewModelStore.CurrentViewModel = new ProductsVM(_viewModelStore, _employeeStore);
+                        _viewModelStore.CurrentViewModel = new ProductsVM();
                 }
                 else
                 {

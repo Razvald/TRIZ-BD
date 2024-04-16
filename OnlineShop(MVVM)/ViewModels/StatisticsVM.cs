@@ -8,16 +8,12 @@ namespace OnlineShop_MVVM_.ViewModels
 {
     public class StatisticsVM : VMBase
     {
-        private readonly VMStore _vmStore;
-        private readonly EmployeeStore _epmStore;
         private StatisticM _statisticM;
         public ObservableCollection<Employee> EmployeesDataList { get; set; } = new ObservableCollection<Employee>();
         public ObservableCollection<PickupPoint> PickupPointsDataList { get; set; } = new ObservableCollection<PickupPoint>();
 
-        public StatisticsVM(VMStore vmStore, EmployeeStore empStore)
+        public StatisticsVM()
         {
-            _vmStore = vmStore;
-            _epmStore = empStore;
             _statisticM = new StatisticM();
 
             empList();

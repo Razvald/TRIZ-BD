@@ -1,5 +1,4 @@
-﻿using OnlineShop_MVVM_.Views;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace OnlineShop_MVVM_.UserControls
@@ -10,7 +9,7 @@ namespace OnlineShop_MVVM_.UserControls
         {
             InitializeComponent();
         }
-
+        /*
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             LoginWind loginWind = new();
@@ -33,6 +32,6 @@ namespace OnlineShop_MVVM_.UserControls
         {
             StatisticsWind statisticsWind = new();
             statisticsWind.Show();
-        }
+        }*/
     }
 }

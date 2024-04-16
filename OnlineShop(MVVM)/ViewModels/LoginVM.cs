@@ -1,4 +1,5 @@
-﻿using OnlineShop_MVVM_.Models;
+﻿using OnlineShop_MVVM_.Command;
+using OnlineShop_MVVM_.Models;
 using System.Windows.Input;
 
 namespace OnlineShop_MVVM_.ViewModels
@@ -6,9 +7,10 @@ namespace OnlineShop_MVVM_.ViewModels
     public class LoginVM : VMBase
     {
         public LoginM _loginM;
-        public LoginVM()
+        public LoginVM(VMStore viewModelStore, EmployeeStore employeeStore)
         { 
             _loginM = new LoginM();
+            LoginCommand = new LoginCommand(viewModelStore, employeeStore, this);
         }
 
         public string Login

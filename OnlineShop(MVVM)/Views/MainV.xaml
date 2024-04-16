@@ -4,44 +4,49 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OnlineShop_MVVM_.Views"
-        xmlns:views="clr-namespace:OnlineShop_MVVM_.UserControls"
+        xmlns:cm="clr-namespace:OnlineShop_MVVM_.Command"
         xmlns:vm="clr-namespace:OnlineShop_MVVM_.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--<views:Header />-->
+        <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button Content="Логин" Margin="5,0,5,0" FontSize="20"
+                    Command="{Binding ChangeViewModelCommand}" 
+                    CommandParameter="LoginVM"/>
+            <Button Content="Сотрудник + ПВЗ" Margin="5,0,5,0" FontSize="20"
+                    Command="{Binding ChangeViewModelCommand}" 
+                    CommandParameter="PickupEmployeeVM"/>
+            <Button Content="Продукты" Margin="5,0,5,0" FontSize="20"
+                    Command="{Binding ChangeViewModelCommand}" 
+                    CommandParameter="ProductsVM"/>
+            <Button Content="Статистика" Margin="5,0,5,0" FontSize="20"
+                    Command="{Binding ChangeViewModelCommand}" 
+                    CommandParameter="StatisticsVM"/>
+        </DockPanel>
 
-        <ContentControl Margin="15" Grid.Row="1"
-                        Content="{Binding CurrentViewModel}" 
-                        HorizontalContentAlignment="Stretch" 
-                        VerticalContentAlignment="Stretch">
+        <ContentControl Grid.Row="1" Margin="15"
+                    Content="{Binding CurrentViewModel}" 
+                    HorizontalContentAlignment="Stretch" 
+                    VerticalContentAlignment="Stretch">
             <ContentControl.Resources>
-                <!--Логин-->
                 <DataTemplate DataType="{x:Type vm:LoginVM}">
                     <local:LoginV/>
                 </DataTemplate>
-
-                <!--Сотрудник + ПВЗ-->
                 <DataTemplate DataType="{x:Type vm:PickupEmployeeVM}">
                     <local:PickupEmployeeV/>
                 </DataTemplate>
-
-                <!--Продукты-->
                 <DataTemplate DataType="{x:Type vm:ProductsVM}">
                     <local:ProductsV/>
                 </DataTemplate>
-
-                <!--Статистика-->
                 <DataTemplate DataType="{x:Type vm:StatisticsVM}">
                     <local:StatisticsV/>
                 </DataTemplate>
-
             </ContentControl.Resources>
         </ContentControl>
     </Grid>
