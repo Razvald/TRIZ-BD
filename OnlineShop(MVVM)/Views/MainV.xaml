@@ -16,18 +16,20 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Button Content="Логин" Margin="5,0,5,0" FontSize="20"
+            <Button Content="Логин" Margin="5" FontSize="20"
                     Command="{Binding ChangeViewModelCommand}" 
                     CommandParameter="LoginVM"/>
-            <Button Content="Сотрудник + ПВЗ" Margin="5,0,5,0" FontSize="20"
+            <Button Content="Сотрудник + ПВЗ" Margin="5" FontSize="20"
                     Command="{Binding ChangeViewModelCommand}" 
                     CommandParameter="PickupEmployeeVM"/>
-            <Button Content="Продукты" Margin="5,0,5,0" FontSize="20"
+            <Button Content="Продукты" Margin="5" FontSize="20"
                     Command="{Binding ChangeViewModelCommand}" 
                     CommandParameter="ProductsVM"/>
-            <Button Content="Статистика" Margin="5,0,5,0" FontSize="20"
+            <Button Content="Статистика" Margin="5" FontSize="20"
                     Command="{Binding ChangeViewModelCommand}" 
                     CommandParameter="StatisticsVM"/>
+            <TextBox Text=" Текущий пользователь:" VerticalAlignment="Center" />
+            <TextBox Text="{Binding CurrentEmployee}" VerticalAlignment="Center" />
         </DockPanel>
 
         <ContentControl Grid.Row="1" Margin="15"
