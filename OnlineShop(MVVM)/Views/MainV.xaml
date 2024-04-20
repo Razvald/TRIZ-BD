@@ -28,8 +28,15 @@
             <Button Content="Статистика" Margin="5" FontSize="20"
                     Command="{Binding ChangeViewModelCommand}" 
                     CommandParameter="StatisticsVM"/>
-            <TextBox Text=" Текущий пользователь:" VerticalAlignment="Center" />
-            <TextBox Text="{Binding CurrentEmployee}" VerticalAlignment="Center" />
+
+            <TextBlock VerticalAlignment="Center">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="Пользователь: {0}, Роль: {1}">
+                        <Binding Path="CurrentEmployee.Name" />
+                        <Binding Path="CurrentEmployee.Role" />
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
         </DockPanel>
 
         <ContentControl Grid.Row="1" Margin="15"

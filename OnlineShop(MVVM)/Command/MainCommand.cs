@@ -17,23 +17,17 @@ namespace OnlineShop_MVVM_.Command
         {
             if (parameter is string viewModelName)
             {
-                switch (viewModelName)
+                Func<VMStore, EmployeeStore, VMBase> createViewModel = viewModelName switch
                 {
-                    case "LoginVM":
-                        _viewModelStore.CurrentViewModel = new LoginVM(_viewModelStore, _employeeStore);
-                        break;
-                    case "PickupEmployeeVM":
-                        _viewModelStore.CurrentViewModel = new PickupEmployeeVM();
-                        break;
-                    case "ProductsVM":
-                        _viewModelStore.CurrentViewModel = new ProductsVM();
-                        break;
-                    case "StatisticsVM":
-                        _viewModelStore.CurrentViewModel = new StatisticsVM();
-                        break;
-                    default:
-                        throw new ArgumentException("Invalid ViewModel name");
-                }
+                    "LoginVM" => (vmStore, empStore) => new LoginVM(vmStore, empStore),
+                    "PickupEmployeeVM" => (vmStore, empStore) => new PickupEmployeeVM(),
+                    "ProductsVM" => (vmStore, empStore) => new ProductsVM(),
+                    "StatisticsVM" => (vmStore, empStore) => new StatisticsVM(),
+                    _ => throw new ArgumentException("Invalid ViewModel name"),
+                };
+
+                NavigateCommand navigateCommand = new(_viewModelStore, _employeeStore, createViewModel);
+                navigateCommand.Execute(null);
             }
             else
             {
