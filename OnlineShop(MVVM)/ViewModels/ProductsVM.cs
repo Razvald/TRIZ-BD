@@ -1,4 +1,5 @@
 ﻿using OnlineShop_MVVM_.Command;
+using OnlineShop_MVVM_.Database;
 using OnlineShop_MVVM_.Database.Entity;
 using OnlineShop_MVVM_.Models;
 using System.Collections.ObjectModel;
@@ -9,33 +10,60 @@ namespace OnlineShop_MVVM_.ViewModels
 {
     public class ProductsVM : VMBase
     {
+        private readonly AppDbContext _dbContext;
         private readonly ProductsM _productsM;
+        private readonly EmployeeStore _employeeStore;
         public ObservableCollection<Product> ProductsDataList { get; set; } = new ObservableCollection<Product>();
         public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
         private Category _selectedCategory;
         private ObservableCollection<Product> _allProducts;
+        private bool _isAdmin;
 
-        public ProductsVM()
+        public bool IsAdmin
         {
+            get { return _isAdmin; }
+            set
+            {
+                if (_isAdmin != value)
+                {
+                    _isAdmin = value;
+                    OnPropertyChanged(nameof(IsAdmin));
+                }
+            }
+        }
+
+        public ProductsVM(AppDbContext dbContext, EmployeeStore employeeStore)
+        {
+            _employeeStore = employeeStore;
+            _dbContext = dbContext;
             _productsM = new ProductsM();
-            _allProducts = new ObservableCollection<Product>(Product.GetProducts());
-            
+            _allProducts = new ObservableCollection<Product>(_dbContext.Products);
+
             UpdateFilteredProducts();
             LoadCategories();
 
             SaveCommand = new SaveCommand();
 
             PropertyChanged += ProductsVM_PropertyChanged;
+
+            if (_employeeStore.CurrentEmployee.RoleID != 2)
+            {
+                IsAdmin = true;
+            }
         }
 
         private void LoadCategories()
         {
             Categories.Clear();
+            var categories = _dbContext.Categories.ToList(); // Убедитесь что категории загружены в список
 
-            foreach (Category category in Enum.GetValues(typeof(Category)))
+            foreach (var category in categories)
             {
                 Categories.Add(category);
             }
+
+            if (Categories.Any())
+                SelectedCategory = Categories.First(); // Установить первую категорию по умолчанию
         }
 
         private void ProductsVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -56,12 +84,13 @@ namespace OnlineShop_MVVM_.ViewModels
 
             foreach (var product in _allProducts)
             {
-                if (MatchesSearch(product) && (product.Category == _selectedCategory || _selectedCategory == Category.All))
+                if (MatchesSearch(product) && (_selectedCategory == null || product.Category == _selectedCategory))
                 {
                     ProductsDataList.Add(product);
                 }
             }
         }
+
 
         private void UpdateCategoryFilter()
         {
@@ -69,7 +98,7 @@ namespace OnlineShop_MVVM_.ViewModels
 
             foreach (var product in _allProducts)
             {
-                if (MatchesSearch(product) && (product.Category == _selectedCategory || _selectedCategory == Category.All))
+                if (MatchesSearch(product) && (product.Category == _selectedCategory || _selectedCategory == _dbContext.Categories.FirstOrDefault(c => c.ID == 1)))
                 {
                     ProductsDataList.Add(product);
                 }

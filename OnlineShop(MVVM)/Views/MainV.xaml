@@ -33,7 +33,7 @@
                 <TextBlock.Text>
                     <MultiBinding StringFormat="Пользователь: {0}, Роль: {1}">
                         <Binding Path="CurrentEmployee.Name" />
-                        <Binding Path="CurrentEmployee.Role" />
+                        <Binding Path="CurrentEmployee.Role.Name" />
                     </MultiBinding>
                 </TextBlock.Text>
             </TextBlock>

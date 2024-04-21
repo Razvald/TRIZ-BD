@@ -26,9 +26,9 @@
 
         <!-- Левая часть с данными о ПВЗ и заказах -->
         <Grid Grid.Row="2" Grid.Column="0">
-            <DataGrid ItemsSource="{Binding PickupPointsDataList}" AutoGenerateColumns="False">
+            <DataGrid ItemsSource="{Binding PickupPointsDataList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsAdmin}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Pickup Point ID" Binding="{Binding PickupPointID}" />
+                    <DataGridTextColumn Header="Pickup Point ID" Binding="{Binding ID}" />
                     <DataGridTextColumn Header="Location" Binding="{Binding Location}" />
                     <DataGridTextColumn Header="Turnover" Binding="{Binding Turnover}" />
                     <DataGridTextColumn Header="Rating" Binding="{Binding Rating}" />
@@ -45,9 +45,9 @@
 
         <!-- Правая часть с данными о сотрудниках -->
         <Grid Grid.Row="2" Grid.Column="1">
-            <DataGrid ItemsSource="{Binding EmployeesDataList}" AutoGenerateColumns="False">
+            <DataGrid ItemsSource="{Binding EmployeesDataList}" AutoGenerateColumns="False" IsReadOnly="{Binding IsAdmin}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Employee ID" Binding="{Binding EmployeeID}" />
+                    <DataGridTextColumn Header="Employee ID" Binding="{Binding ID}" />
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                     <DataGridTextColumn Header="Salary" Binding="{Binding Salary}" />
                     <DataGridTextColumn Header="Login" Binding="{Binding Login}" />
