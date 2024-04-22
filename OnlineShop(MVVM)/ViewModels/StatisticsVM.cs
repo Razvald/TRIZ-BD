@@ -3,6 +3,8 @@ using OnlineShop_MVVM_.Database;
 using OnlineShop_MVVM_.Database.Entity;
 using OnlineShop_MVVM_.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace OnlineShop_MVVM_.ViewModels
 {
@@ -11,6 +13,8 @@ namespace OnlineShop_MVVM_.ViewModels
         private readonly AppDbContext _dbContext;
         private StatisticM _statisticM;
         private readonly EmployeeStore _employeeStore;
+        private ObservableCollection<PickupPoint> _allPickupPoints;
+        private ObservableCollection<Employee> _allEmployees;
         private bool _isAdmin;
 
         public bool IsAdmin
@@ -25,6 +29,34 @@ namespace OnlineShop_MVVM_.ViewModels
                 }
             }
         }
+        private bool _isWorker;
+
+        public bool IsWorker
+        {
+            get { return _isWorker; }
+            set
+            {
+                if (_isWorker != value)
+                {
+                    _isWorker = value;
+                    OnPropertyChanged(nameof(IsWorker));
+                }
+            }
+        }
+        private bool _isSave;
+
+        public bool IsSave
+        {
+            get { return _isSave; }
+            set
+            {
+                if (_isSave != value)
+                {
+                    _isSave = value;
+                    OnPropertyChanged(nameof(IsSave));
+                }
+            }
+        }
         public ObservableCollection<Employee> EmployeesDataList { get; set; } = new ObservableCollection<Employee>();
         public ObservableCollection<PickupPoint> PickupPointsDataList { get; set; } = new ObservableCollection<PickupPoint>();
 
@@ -33,14 +65,18 @@ namespace OnlineShop_MVVM_.ViewModels
             _dbContext = dbContext;
             _employeeStore = employeeStore;
             _statisticM = new StatisticM();
+            _allEmployees = new ObservableCollection<Employee>(_dbContext.Employees);
+            _allPickupPoints = new ObservableCollection<PickupPoint>(_dbContext.PickupPoints);
 
             empList();
             pointList();
 
-            if (_employeeStore.CurrentEmployee.RoleID != 2)
-            {
-                IsAdmin = true;
-            }
+            IsAdmin = _employeeStore.CurrentEmployee.RoleID != 2;
+            IsWorker = _employeeStore.CurrentEmployee.RoleID != 3;
+            IsSave = _employeeStore.CurrentEmployee.RoleID == 2;
+
+            PropertyChanged += StatisticsVM_PropertyChanged;
+            SaveCommand = new SaveCommand(_dbContext);
         }
 
         private void empList()
@@ -57,10 +93,70 @@ namespace OnlineShop_MVVM_.ViewModels
         {
             var pickupPoints = _dbContext.PickupPoints;
 
-            foreach (var emp in pickupPoints)
+            if (_employeeStore.CurrentEmployee.RoleID == 3)
             {
-                PickupPointsDataList.Add(emp);
+                var employeePickupPoint = pickupPoints.FirstOrDefault(pp => pp.ID == _employeeStore.CurrentEmployee.PickupPointID);
+                PickupPointsDataList.Clear();
+                if (employeePickupPoint != null)
+                {
+                    PickupPointsDataList.Add(employeePickupPoint);
+                }
             }
+            else 
+            {
+                foreach (var point in pickupPoints)
+                {
+                    PickupPointsDataList.Add(point);
+                }
+            }
+        }
+
+        private void StatisticsVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SearchPoint))
+            {
+                UpdateFilteredPoint();
+            }
+            else if (e.PropertyName == nameof(SearchEmp))
+            {
+                UpdateFilteredEmployee();
+            }
+        }
+
+        private void UpdateFilteredPoint()
+        {
+            PickupPointsDataList.Clear();
+
+            foreach (var point in _allPickupPoints)
+            {
+                if (MatchesPointSearch(point))
+                {
+                    PickupPointsDataList.Add(point);
+                }
+            }
+        }
+
+        private void UpdateFilteredEmployee()
+        {
+            EmployeesDataList.Clear();
+
+            foreach (var employee in _allEmployees)
+            {
+                if (MatchesEmployeeSearch(employee))
+                {
+                    EmployeesDataList.Add(employee);
+                }
+            }
+        }
+
+        private bool MatchesPointSearch(PickupPoint point)
+        {
+            return string.IsNullOrWhiteSpace(SearchPoint) || point.Location.Contains(SearchPoint, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private bool MatchesEmployeeSearch(Employee employee)
+        {
+            return string.IsNullOrWhiteSpace(SearchEmp) || employee.Name.Contains(SearchEmp, StringComparison.OrdinalIgnoreCase);
         }
 
         public string SearchPoint
@@ -75,7 +171,6 @@ namespace OnlineShop_MVVM_.ViewModels
             set { _statisticM.SearchEmp = value; OnPropertyChanged(nameof(SearchEmp)); }
         }
 
-        //public ICommand Filter { get; set; }
-        //public ICommand PropertyChanged { get; set; }
+        public ICommand SaveCommand { get; set; }
     }
 }

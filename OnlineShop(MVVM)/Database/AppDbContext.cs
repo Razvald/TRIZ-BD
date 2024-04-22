@@ -17,13 +17,13 @@ namespace OnlineShop_MVVM_.Database
 
         public AppDbContext() : base()
         {
-            Database.EnsureDeleted();
+            //Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
-        private readonly string connectString = "Server=(local); Database=OnlineStore; Integrated Security=true;";
+        //private readonly string connectString = "Server=(local); Database=OnlineStore; Integrated Security=true;";
 
-        //private readonly string connectString = "Data Source=DBSRV\\AG2023; Initial Catalog=OnlineStore; Integrated Security=true;";
+        private readonly string connectString = "Data Source=DBSRV\\AG2023; Initial Catalog=OnlineStore; Integrated Security=true;";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

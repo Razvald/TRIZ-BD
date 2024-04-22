@@ -19,7 +19,7 @@ namespace OnlineShop_MVVM_.ViewModels
         private ObservableCollection<Product> _allProducts;
         private bool _isAdmin;
 
-        public bool IsAdmin
+        public bool IsNotGuest
         {
             get { return _isAdmin; }
             set
@@ -27,7 +27,21 @@ namespace OnlineShop_MVVM_.ViewModels
                 if (_isAdmin != value)
                 {
                     _isAdmin = value;
-                    OnPropertyChanged(nameof(IsAdmin));
+                    OnPropertyChanged(nameof(IsNotGuest));
+                }
+            }
+        }
+        private bool _isSave;
+
+        public bool IsSave
+        {
+            get { return _isSave; }
+            set
+            {
+                if (_isSave != value)
+                {
+                    _isSave = value;
+                    OnPropertyChanged(nameof(IsSave));
                 }
             }
         }
@@ -42,14 +56,15 @@ namespace OnlineShop_MVVM_.ViewModels
             UpdateFilteredProducts();
             LoadCategories();
 
-            SaveCommand = new SaveCommand();
+            SaveCommand = new SaveCommand(_dbContext);
 
             PropertyChanged += ProductsVM_PropertyChanged;
 
-            if (_employeeStore.CurrentEmployee.RoleID != 2)
+            if (_employeeStore.CurrentEmployee.RoleID != 1)
             {
-                IsAdmin = true;
+                IsNotGuest = true;
             }
+            IsSave = _employeeStore.CurrentEmployee.RoleID == 2;
         }
 
         private void LoadCategories()
@@ -90,7 +105,6 @@ namespace OnlineShop_MVVM_.ViewModels
                 }
             }
         }
-
 
         private void UpdateCategoryFilter()
         {

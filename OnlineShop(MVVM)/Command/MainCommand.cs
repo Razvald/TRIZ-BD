@@ -23,7 +23,7 @@ namespace OnlineShop_MVVM_.Command
                 Func<VMStore, EmployeeStore, VMBase> createViewModel = viewModelName switch
                 {
                     "LoginVM" => (vmStore, empStore) => new LoginVM(vmStore, empStore, _dbContext),
-                    "PickupEmployeeVM" => (vmStore, empStore) => new PickupEmployeeVM(_dbContext),
+                    "PickupEmployeeVM" => (vmStore, empStore) => new PickupEmployeeVM(_dbContext, _employeeStore),
                     "ProductsVM" => (vmStore, empStore) => new ProductsVM(_dbContext, _employeeStore),
                     "StatisticsVM" => (vmStore, empStore) => new StatisticsVM(_dbContext, _employeeStore),
                     _ => throw new ArgumentException("Invalid ViewModel name"),

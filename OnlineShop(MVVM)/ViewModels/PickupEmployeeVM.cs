@@ -3,7 +3,6 @@ using OnlineShop_MVVM_.Database;
 using OnlineShop_MVVM_.Database.Entity;
 using OnlineShop_MVVM_.Models;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Input;
 
 namespace OnlineShop_MVVM_.ViewModels
@@ -12,6 +11,7 @@ namespace OnlineShop_MVVM_.ViewModels
     {
         private readonly AppDbContext _dbContext;
         private PickupEmployeeM _pickupEmployeeM;
+        private readonly EmployeeStore _employeeStore;
         public ObservableCollection<PickupEmployee> CombinedDataList { get; set; } = new ObservableCollection<PickupEmployee>();
         private bool _isAdmin;
 
@@ -27,15 +27,36 @@ namespace OnlineShop_MVVM_.ViewModels
                 }
             }
         }
+        private bool _isSave;
 
-        public PickupEmployeeVM(AppDbContext dbContext)
+        public bool IsSave
+        {
+            get { return _isSave; }
+            set
+            {
+                if (_isSave != value)
+                {
+                    _isSave = value;
+                    OnPropertyChanged(nameof(IsSave));
+                }
+            }
+        }
+
+        public PickupEmployeeVM(AppDbContext dbContext, EmployeeStore employeeStore)
         {
             _dbContext = dbContext;
+            _employeeStore = employeeStore;
             _pickupEmployeeM = new PickupEmployeeM();
 
             InitializeCombinedDataList();
 
-            SaveCommand = new SaveCommand();
+            SaveCommand = new SaveCommand(_dbContext);
+
+            if (_employeeStore.CurrentEmployee.RoleID != 2)
+            {
+                IsAdmin = true;
+            }
+            IsSave = _employeeStore.CurrentEmployee.RoleID == 2;
         }
 
         private void InitializeCombinedDataList()
